@@ -1,0 +1,2 @@
+SUCCESS = None
+FAIL = 1
