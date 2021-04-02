@@ -2,11 +2,12 @@ import datetime
 import fnmatch
 import tempfile
 import os
+import sys
 from urllib.parse import urlparse
 
 import udl.errors
 from udl.Loader import load_kernels
-from udl.utils import strip_http, copy_dir_content
+from udl.utils import strip_http, copy_dir_content, rmdir_or_warn
 from udl import returncodes
 
 def download(url, outdir=None, *args):
@@ -68,7 +69,7 @@ succeeds."""
                                 copy_dir_content(dldir, outdir)
                 except KeyboardInterrupt:
                     raise KeyboardInterrupt
-                except:
+                except Exception:
                     exit_code = returncodes.FAIL
                     continue
 
@@ -81,11 +82,12 @@ succeeds."""
     # change back to the original working directory
     os.chdir(original_cwd)
 
-    if exit_code == -1:
-        raise udl.errors.NoMatchingKernelError(
-            "No kernels matched the url"
-        )
     if exit_code != returncodes.SUCCESS:
+        rmdir_or_warn(outdir)
+        if exit_code == -1:
+            raise udl.errors.NoMatchingKernelError(
+                "No kernels matched the url"
+            )
         raise udl.errors.NoWorkingKernelError(
             "No kernels were able to download the file"
         )

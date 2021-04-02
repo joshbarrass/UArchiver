@@ -1,3 +1,5 @@
+import os
+import sys
 from distutils.dir_util import copy_tree
 
 def strip_http(url):
@@ -11,3 +13,12 @@ def strip_http(url):
 def copy_dir_content(src_dir, dest_dir):
     """Move the contents of the source dir to the destination dir"""
     copy_tree(src_dir, dest_dir)
+
+def rmdir_or_warn(directory):
+    try:
+        os.rmdir(directory)
+    except OSError:
+        print(
+            "Warning: Failed to remove directory {}".format(directory),
+            file=sys.stderr
+        )
