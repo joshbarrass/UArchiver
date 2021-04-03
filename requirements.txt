@@ -1,3 +1,5 @@
 nose
 coverage==4.3
 codeclimate-test-reporter
+youtube_dl
+docopt
