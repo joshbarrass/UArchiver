@@ -63,6 +63,9 @@ succeeds."""
                             exit_code = kernel.download(
                                 url, tempdir, dldir, *args
                             )
+                            # check that files were actually written
+                            if len(os.listdir(dldir)) == 0:
+                                exit_code = returncodes.NOTHING_DOWNLOADED
                             # if download is successful, copy the
                             # files to the real output dir
                             if exit_code == returncodes.SUCCESS:
