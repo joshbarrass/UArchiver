@@ -4,6 +4,7 @@ import tempfile
 import os
 import sys
 from urllib.parse import urlparse
+import traceback
 
 import udl.errors
 from udl.Loader import load_kernels
@@ -69,11 +70,21 @@ succeeds."""
                             # if download is successful, copy the
                             # files to the real output dir
                             if exit_code == returncodes.SUCCESS:
+                                # TODO: move, not copy
                                 copy_dir_content(dldir, outdir)
                 except KeyboardInterrupt:
                     raise KeyboardInterrupt
-                except Exception:
+                except Exception as e:
                     exit_code = returncodes.FAIL
+                    print(
+                        "Warning: error occurred in kernel:\n{}"
+                        .format(e),
+                        file=sys.stderr
+                    )
+                    print("Displaying traceback")
+                    print("-" * 20)
+                    traceback.print_exc()
+                    print("-" * 20)
                     continue
 
         # if the exit code is a success, end the loop now
