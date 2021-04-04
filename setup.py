@@ -28,9 +28,10 @@ setup(
     author_email='josh.barrass.work@gmail.com',
     url='https://github.com/joshbarrass/UArchiver',
     scripts=['uarchiver'],
-    packages=['udl'],
+    packages=['udl', 'udl.kernels'],
     package_dir={
         'udl': 'udl',
+        'udl.kernels': 'udl/kernels',
     },
     install_requires=['docopt>=0.6.2', 'youtube_dl'],
     keywords='downloader archive dump',
