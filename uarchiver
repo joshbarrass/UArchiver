@@ -18,8 +18,7 @@ Options:
 from docopt import docopt
 
 from udl.Downloader import download
-
-VERSION = "1.0-pre"
+from udl import VERSION
 
 if __name__ == "__main__":
     args = docopt(__doc__, version=VERSION)

@@ -3,7 +3,7 @@
 import codecs
 import os
 import sys
-from uarchiver import VERSION
+from udl import VERSION
 
 try:
     from setuptools import setup
