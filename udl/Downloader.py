@@ -67,9 +67,11 @@ succeeds."""
                     with tempfile.TemporaryDirectory() as tempdir:
                         with tempfile.TemporaryDirectory() as dldir:
                             # attempt to download
+                            umask = os.umask(0o111)
                             exit_code = kernel.download(
                                 url, tempdir, dldir, *args
                             )
+                            os.umask(umask)
                             # check that files were actually written
                             if len(os.listdir(dldir)) == 0:
                                 exit_code = returncodes.NOTHING_DOWNLOADED
