@@ -27,7 +27,7 @@ succeeds."""
         # want to match mode
         mode = os.stat(
             os.path.abspath(os.path.join(outdir, ".."))
-        ).st_mode & 0o777
+        ).st_mode
         os.mkdir(outdir, mode=mode)
     if not os.path.isdir(outdir):
         raise FileExistsError
