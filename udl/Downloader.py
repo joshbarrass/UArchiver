@@ -24,7 +24,11 @@ succeeds."""
 
     # check if the directory exists and make it if necessary
     if not os.path.exists(outdir):
-        os.mkdir(outdir)
+        # want to match mode
+        mode = os.stat(
+            os.path.abspath(os.path.join(outdir, ".."))
+        ).st_mode & 0o777
+        os.mkdir(outdir, mode=mode)
     if not os.path.isdir(outdir):
         raise FileExistsError
 
