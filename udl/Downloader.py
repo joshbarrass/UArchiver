@@ -25,10 +25,12 @@ succeeds."""
     # check if the directory exists and make it if necessary
     if not os.path.exists(outdir):
         # want to match mode
+        umask = os.umask(0)
         mode = os.stat(
             os.path.abspath(os.path.join(outdir, ".."))
         ).st_mode
         os.mkdir(outdir, mode=mode)
+        os.umask(umask)
     if not os.path.isdir(outdir):
         raise FileExistsError
 
