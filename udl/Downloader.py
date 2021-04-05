@@ -24,15 +24,19 @@ succeeds."""
 
     # check if the directory exists and make it if necessary
     if not os.path.exists(outdir):
-        # want to match mode
-        umask = os.umask(0)
+        # get the mode of the parent dir for matching
         mode = os.stat(
             os.path.abspath(os.path.join(outdir, ".."))
         ).st_mode
+        # want to match mode
+        umask = os.umask(0)
         os.mkdir(outdir, mode=mode)
         os.umask(umask)
-    if not os.path.isdir(outdir):
+    elif not os.path.isdir(outdir):
         raise FileExistsError
+    else:
+        # get the mode of the output dir for matching
+        mode = os.stat(os.path.abspath(outdir)).st_mode
 
     # load the kernels
     kernels = load_kernels()
@@ -66,8 +70,9 @@ succeeds."""
                     # to work in
                     with tempfile.TemporaryDirectory() as tempdir:
                         with tempfile.TemporaryDirectory() as dldir:
+                            # make umask match mode
+                            umask = os.umask(~mode & 0o777)
                             # attempt to download
-                            umask = os.umask(0o111)
                             exit_code = kernel.download(
                                 url, tempdir, dldir, *args
                             )
