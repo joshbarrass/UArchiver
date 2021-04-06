@@ -1,7 +1,10 @@
 from udl.errors import UnimplementedError
 
 class KernelBase:
+    # List of domains this kernel works for
     DOMAINS = []
+    # Whether or not the os umask should be changed before download
+    ALLOW_UMASKING = True
 
     def __init__(self):
         pass

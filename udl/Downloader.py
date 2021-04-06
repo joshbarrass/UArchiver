@@ -70,13 +70,18 @@ succeeds."""
                     # to work in
                     with tempfile.TemporaryDirectory() as tempdir:
                         with tempfile.TemporaryDirectory() as dldir:
-                            # make umask match mode
-                            umask = os.umask(~mode & 0o777)
+                            if kernel.ALLOW_UMASKING:
+                                umasked = True
+                                # make umask match mode
+                                umask = os.umask(~mode & 0o777)
+                            else:
+                                umasked = False
                             # attempt to download
                             exit_code = kernel.download(
                                 url, tempdir, dldir, *args
                             )
-                            os.umask(umask)
+                            if umasked:
+                                os.umask(umask)
                             # check that files were actually written
                             if len(os.listdir(dldir)) == 0:
                                 exit_code = returncodes.NOTHING_DOWNLOADED
