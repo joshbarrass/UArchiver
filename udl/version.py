@@ -5,7 +5,7 @@ try:
         ["git", "describe", "--tags", "--long"],
         stdout=subprocess.PIPE,
         stderr=subprocess.DEVNULL
-    ).communicate()[0].decode("utf-8")
+    ).communicate()[0].decode("utf-8").strip()
 
     if _project_version == "":
         _project_version = "0.0.0"
