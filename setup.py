@@ -36,8 +36,9 @@ setup(
     install_requires=['docopt>=0.6.2', 'youtube_dl'],
     keywords='downloader archive dump',
     classifiers=[
-        'Intended Audience :: End Users/Developers/Archivers',
+        'Intended Audience :: End Users/Desktop',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
+        'Operating System :: POSIX :: Linux',
     ]
 )
