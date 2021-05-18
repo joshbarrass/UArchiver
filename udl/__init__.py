@@ -1,1 +1,1 @@
-VERSION = "1.0-pre"
+from udl.version import VERSION
