@@ -19,7 +19,7 @@ with codecs.open('README.md') as f:
     long_description = f.read()
 
 setup(
-    name='uarchiver',
+    name='UArchiver',
     version=VERSION,
     description='Ultimate Archiver -- A modular archiving tool',
     long_description=long_description,
